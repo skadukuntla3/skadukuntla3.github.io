@@ -120,11 +120,14 @@
   #cli.open { display: flex; }
   .box { width: 100%; max-width: 620px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 20px 60px #00000026; overflow: hidden; font: 400 13px/1.7 var(--mono); }
   .box .bar { padding: 8px 14px; border-bottom: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; }
-  #log { padding: 12px 16px 0; max-height: 40vh; overflow-y: auto; white-space: pre-wrap; color: var(--muted); }
+  #log { padding: 12px 16px 0; max-height: 32vh; overflow-y: auto; white-space: pre-wrap; color: var(--muted); }
   #log .cmd { color: var(--ink); } #log .cmd::before { content: "$ "; color: var(--accent); }
   .inrow { display: flex; padding: 10px 16px 14px; gap: 8px; }
   .inrow span { color: var(--accent); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px 12px; border-bottom: 1px solid var(--line); }
+  .chips[hidden] { display: none; }
+  .box .bar .barr { display: flex; gap: 16px; align-items: center; }
+  #toggle-cmds { font: inherit; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 0; } #toggle-cmds:hover { color: var(--blue); }
   .chips button { font: 400 12px var(--mono); color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; cursor: pointer; transition: color .15s, border-color .15s, transform .12s; }
   .chips button:hover { color: var(--blue); border-color: var(--blue); }
   .chips button:active { transform: scale(.94); }
@@ -407,10 +410,10 @@
 
 <div id="cli" role="dialog" aria-modal="true" aria-label="Terminal">
   <div class="box">
-    <div class="bar"><span>sathvika@portfolio:~</span><span>esc to close</span></div>
-    <div id="log" aria-live="polite">Available commands (click one or type it):
-</div>
+    <div class="bar"><span>sathvika@portfolio:~</span><span class="barr"><button type="button" id="toggle-cmds" aria-expanded="true" aria-controls="chips">commands ▾</button><span>esc to close</span></span></div>
     <div id="chips" class="chips" aria-label="Available commands"></div>
+    <div id="log" aria-live="polite">Click a command above or type one.
+</div>
     <form class="inrow" id="cli-form" autocomplete="off"><span>$</span><input id="in" aria-label="Command" spellcheck="false" autocapitalize="off"></form>
   </div>
 </div>
@@ -508,8 +511,11 @@
     exit: () => { close(); return ''; }, clear: () => { log.textContent = ''; return ''; },
   };
   const SHOW = ['help', 'whoami', 'ls', 'cat about', 'cd work', 'cd education', 'cd projects', 'cd skills', 'cd leadership', 'cd contact', 'theme', 'email', 'github', 'linkedin', 'sudo hire-me', 'matrix', 'clear', 'exit'];
-  const chipBox = $('#chips');
+  const chipBox = $('#chips'), tg = $('#toggle-cmds');
+  const showChips = v => { chipBox.hidden = !v; tg.setAttribute('aria-expanded', v); tg.textContent = v ? 'commands ▾' : 'commands ▸'; store.set('cmds', v ? '1' : '0'); };
+  tg.onclick = () => showChips(chipBox.hidden);
   SHOW.forEach(c => { const b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.onclick = () => { run(c); input.focus(); }; chipBox.append(b); });
+  showChips(store.get('cmds') !== '0');
   const suggest = q => {
     const names = Object.keys(cmds).concat(['cd work', 'cd education', 'cd projects', 'cd skills', 'cd leadership', 'cd contact']);
     const first = q.split(' ')[0];
@@ -523,7 +529,7 @@
     else if (/^(vim|emacs|nano)\b/.test(q)) out = 'strong opinions detected. Not engaging.';
     else if (/^rm\b/.test(q) && !cmds[q]) out = 'permission denied (and wise).';
     else if (cmds[q]) out = cmds[q]();
-    else { const m = suggest(q); out = `command not found: ${q}.` + (m ? ` Did you mean '${m}'?` : '') + " Pick one from the list above, or try 'help'."; }
+    else { const m = suggest(q); out = `command not found: ${q}.` + (m ? ` Did you mean '${m}'?` : '') + " Try 'help', or use the commands list at the top."; }
     if (out) say(out);
   };
   $('#cli-form').onsubmit = e => { e.preventDefault(); run(input.value); input.value = ''; };
