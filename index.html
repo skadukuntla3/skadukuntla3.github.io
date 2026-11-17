@@ -97,7 +97,8 @@
   .chip:hover { color: var(--ink); border-color: var(--muted); }
   .chip[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
 
-  .id { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; font: 400 13px/1.9 var(--mono); margin: 24px 0 0; overflow-x: auto; }
+  .id { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; font: 400 13px/1.9 var(--mono); margin: 24px 0 0; }
+  .id .r { display: grid; grid-template-columns: 92px minmax(0, 1fr); column-gap: 16px; }
   .id .k { color: var(--muted); }
 
   .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; margin: 0; font-size: 14.5px; }
@@ -216,7 +217,7 @@
           <li><a href="#work" data-s="work">Experience</a></li>
           <li><a href="#education" data-s="education">Education</a></li>
           <li><a href="#projects" data-s="projects">Projects</a></li>
-          <li><a href="#skills" data-s="skills">Toolbox</a></li>
+          <li><a href="#skills" data-s="skills">Recognition</a></li>
           <li><a href="#leadership" data-s="leadership">Leadership</a></li>
           <li><a href="#contact" data-s="contact">Contact</a></li>
         </ul>
@@ -240,10 +241,15 @@
       <p>I'm a <b>full-stack engineer</b> with a strong systems background. I've shipped UIs, APIs and data pipelines end to end: React and Node services, MongoDB-backed backends and test-analytics dashboards, plus the cloud and distributed systems behind them. At Microsoft I owned core pieces of <b>Azure Traffic Manager and DNS</b> for sovereign clouds. At Georgia Tech I own the full stack of a research platform used by 44K people.</p>
       <p>What really pulls me in right now is <b>integrating ML and AI into backend systems</b>. I have hands-on experience with <b>LLMs</b> and with the unglamorous part of making them dependable, including <b>tackling hallucinations</b>, so a model's output is something a system can actually rely on.</p>
       <p class="muted">Before that, IIT Roorkee, where I ranked 7th in JEE Advanced out of 1.2M candidates and learned I like hard problems more than easy ones.</p>
-<pre class="id" aria-label="About, as a terminal listing"><span class="k">uid</span>       sathvika
-<span class="k">groups</span>    systems, cloud, backend, llm, ml
-<span class="k">stack</span>     React · Node · C++ · Python · Go
-<span class="k">location</span>  Atlanta, GA</pre>
+<div class="id" role="group" aria-label="About, as a terminal listing">
+        <div class="r"><span class="k">uid</span><span>sathvika</span></div>
+        <div class="r"><span class="k">groups</span><span>systems, cloud, backend, llm, ml</span></div>
+        <div class="r"><span class="k">languages</span><span>C++ · C · Python · Java · Go · JavaScript · SQL · GraphQL · PHP</span></div>
+        <div class="r"><span class="k">web</span><span>React · Node.js · Django · REST APIs</span></div>
+        <div class="r"><span class="k">infra</span><span>Kubernetes · Docker · Azure · Azure DevOps · Kusto / KQL · CosmosDB · Redis Pub/Sub · Linux · Git</span></div>
+        <div class="r"><span class="k">ml &amp; llm</span><span>LLM integration · hallucination mitigation · PyTorch · scikit-learn · pandas</span></div>
+        <div class="r"><span class="k">location</span><span>Atlanta, GA</span></div>
+      </div>
     </section>
 
     <section class="reveal" id="work" data-sec>
@@ -367,13 +373,9 @@
     </section>
 
     <section class="reveal" id="skills" data-sec>
-      <p class="label">Toolbox</p>
+      <p class="label">Recognition</p>
       <dl class="skills">
-        <div><dt>languages</dt><dd>C++, C, Python, Java, Go, JavaScript, GraphQL, SQL, PHP</dd></div>
-        <div><dt>infra</dt><dd>Kubernetes, Docker, Azure, Azure DevOps, Kusto / KQL, CosmosDB, Redis Pub/Sub, Linux, Git</dd></div>
-        <div><dt>web</dt><dd>React, Node.js, Django, REST APIs</dd></div>
-        <div><dt>ml &amp; llm</dt><dd>LLM integration, hallucination mitigation, PyTorch, scikit-learn, pandas</dd></div>
-        <div class="wide"><dt>recognition</dt><dd><ul class="plain">
+        <div class="wide"><dt>awards &amp; selections</dt><dd><ul class="plain">
           <li>Secured <mark>All India Rank 7</mark> in JEE among 1.2 million candidates.</li>
           <li>Awarded the <mark>KVPY Fellowship</mark>.</li>
           <li>Placed <mark>Global Rank 637</mark> in Google Code Jam to I/O.</li>
